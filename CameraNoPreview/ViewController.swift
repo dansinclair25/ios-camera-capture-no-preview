@@ -26,7 +26,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        captureSession.sessionPreset = AVCaptureSessionPresetLow
+        captureSession.sessionPreset = AVCaptureSessionPresetHigh
         let devices = AVCaptureDevice.devices()
         
         // Loop through all the capture devices on this phone
@@ -58,70 +58,13 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             captureSession.addOutput(videoCaptureOutput)
             
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-            self.view.layer.addSublayer(previewLayer!)
+            self.view.layer.insertSublayer(previewLayer!, below: previewButton.layer)
             previewLayer?.frame = self.view.layer.frame
             previewLayer?.hidden = true
             captureSession.startRunning()
         } catch {
             print("error: \(error)")
         }
-    }
-    
-    func configureDevice() {
-        if let device = captureDevice {
-            do {
-                try device.lockForConfiguration()
-                device.focusMode = .Locked
-                device.unlockForConfiguration()
-            } catch {
-                print("error configuring device: \(error)")
-            }
-            
-        }
-    }
-    
-    func updateDeviceSettings(focusValue : Float, isoValue : Float) {
-        if let device = captureDevice {
-            do {
-                try device.lockForConfiguration()
-                device.setFocusModeLockedWithLensPosition(focusValue, completionHandler: nil)
-                
-                let minISO = device.activeFormat.minISO
-                let maxISO = device.activeFormat.maxISO
-                let clampedISO = isoValue * (maxISO - minISO) + minISO
-                
-                device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, ISO: clampedISO, completionHandler: nil)
-                device.unlockForConfiguration()
-            } catch {
-                print("cannot lock for configuration: \(error)")
-            }
-
-        }
-    }
-    
-    func touchPercent(touch : UITouch) -> CGPoint {
-        // Get the dimensions of the screen in points
-        let screenSize = UIScreen.mainScreen().bounds.size
-        
-        // Create an empty CGPoint object set to 0, 0
-        var touchPer = CGPointZero
-        
-        // Set the x and y values to be the value of the tapped position, divided by the width/height of the screen
-        touchPer.x = touch.locationInView(self.view).x / screenSize.width
-        touchPer.y = touch.locationInView(self.view).y / screenSize.height
-        
-        // Return the populated CGPoint
-        return touchPer
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touchPer = touchPercent(touches.first!)
-        updateDeviceSettings(Float(touchPer.x), isoValue: Float(touchPer.y))
-    }
-    
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touchPer = touchPercent(touches.first!)
-        updateDeviceSettings(Float(touchPer.x), isoValue: Float(touchPer.y))
     }
 
     @IBAction func previewPressed(sender: AnyObject) {

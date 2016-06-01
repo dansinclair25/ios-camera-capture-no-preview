@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CameraNoPreview" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +16,46 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzi-5F-M3x">
+                                <rect key="frame" x="252" y="20" width="96" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="2Wk-J3-0Sd"/>
+                                    <constraint firstAttribute="width" constant="96" id="DU2-gm-cC7"/>
+                                </constraints>
+                                <state key="normal" title="Show Preview"/>
+                                <connections>
+                                    <action selector="previewPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xjj-LE-pRH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzd-jN-ul0">
+                                <rect key="frame" x="242" y="562" width="117" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="7y4-Hf-S25"/>
+                                    <constraint firstAttribute="width" constant="117" id="V0b-YF-MLa"/>
+                                </constraints>
+                                <state key="normal" title="Start Recording"/>
+                                <connections>
+                                    <action selector="recordPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TCf-nW-C1X"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wzi-5F-M3x" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cvz-qE-9Vv"/>
+                            <constraint firstItem="yzd-jN-ul0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oF1-Xc-rSX"/>
+                            <constraint firstItem="wzi-5F-M3x" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="oc6-0K-lg5"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yzd-jN-ul0" secondAttribute="bottom" constant="8" id="qKG-zk-y0S"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="previewButton" destination="wzi-5F-M3x" id="b5d-RE-k6r"/>
+                        <outlet property="recordButton" destination="yzd-jN-ul0" id="EMz-1A-2YV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="566" y="377"/>
         </scene>
     </scenes>
 </document>
